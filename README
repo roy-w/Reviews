@@ -1,0 +1,25 @@
+Hi,
+
+To execute just use gradlew.
+In Windows: ./gradlew.bat run -PappArgs="['<path to CSV file>','translate=true']"
+
+The task took about 4.5 hours (spread across few days due to severe time limit)
+
+How do you make sure that there are no duplicates in the file?
+-   To make sure we have no duplication can implement equals based on some property (say id), and then when reading the file ro Reviews Collection make it a Set and so duplicates will be overwritten.
+    Can also do a preprocess on the file (like Linux's uniq).
+
+We are interested in using full multi core CPU power.
+-   Multi CPU core is achieved by calling parallel on the Streams
+
+We will be running this on machine with 500MB of RAM. How do you make sure that we are not using more than that? How are you going to monitor the memory usage of your program?
+-    If we don't want to pass 500MB we can read the lines in chunks, process them and keep only the relevant count mappings. Then we can sum the maps and take the top N.
+     Can monitor the memory by counting the length of the Strings we read from the file + size of the Maps that hold the counters.
+
+Our goal is to support the files with up to 100M reviews on multiple machines with 500MB of RAM and 4 core CPUs. How are you going to make it happen?
+-    Can you a framework like Spark to distribute the task across the machines.
+
+
+
+
+
